@@ -7,18 +7,31 @@
 </head>
 
 <body>
-    <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script> -->
-
     <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> -->
-
     <!-- <script src="web3.js-1.0.0-beta.35/dist/web3.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> -->
     <script src="main.js"></script>
+
     <label>
-		adress
-		<input type="text" placeholder="enter key" id="ky"><!-- disabled -->
-	</label>
-    <button onClick="go()">get amount on this adress</button>
+        adress
+        <input type="text" placeholder="enter key" id="addKey" value = "qw">
+    </label>
+    <label>
+        amount
+        <input type="text" placeholder="enter amount" id="addAmount" value = "1">
+    </label>
+    <button onClick="addToRopsten()">store data into TestNet</button>
+
+    <br>
+    <br>
+
+    <label>
+        adress
+        <input type="text" placeholder="enter key" id="getByKey" value = "qw">
+    </label>
+
+    <button onClick="getFromRopsten()">get amount on this adress from the TestNet</button>
 </body>
 
 </html>
