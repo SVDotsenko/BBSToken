@@ -384,9 +384,10 @@ function getFromRopsten() {
 
 function go(addOrGet) {
   // web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/22b273651d424974b7ef0de70a7ed880'));
+  // var Web3 = require('web3');
   web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
-
-  // console.log(web3.version.api);
+  
+  console.log(web3.version.api);
   // console.log(web3.eth.getBalance("0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD"));
   // console.log(web3.eth.getBalance("0xE7253fe2834559604dc917Cbe8420301912d0445"));  
   // web3.eth.defaultAccount=web3.eth.accounts[0];
@@ -424,7 +425,7 @@ function go(addOrGet) {
     // });
 
   } else {
-    alert(myContract.at(contractAddress).balanceOf(document.getElementById('getByKey').value));
+    alert(myContract.at(contractAddress).balanceOf(document.getElementById('balance_Of').value));
     // console.log(myContract.at(contractAddress).getTotalAmountByK(document.getElementById('getByKey').value));
   }
 }

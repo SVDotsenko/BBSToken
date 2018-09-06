@@ -7,31 +7,36 @@
 </head>
 
 <body>
-    <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
-    <!-- <script src="web3.js-1.0.0-beta.35/dist/web3.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> -->
+    <!-- <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script> -->    
+    <!-- https://www.npmjs.com/package/web3/v/0.20.7 -->
+    <!-- <script src="web3.js-1.0.0-beta.35/dist/web3.min.js"></script> -->    
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script> -->    
+    <script src="web3.js/0.20.6/web3.min.js"></script>
+    <!-- <script src="web3.js/0.20.7/web3.min.js"></script> -->
+    <!-- <script src="web3.js/1.0.0-beta.36/web3.min.js"></script> -->
     <script src="main.js"></script>
 
     <label>
-        adress
-        <input type="text" placeholder="enter key" id="addKey" value = "qw">
+        wallet adress
+        <input type="text" placeholder="enter key" id="addKey" value="0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD">
     </label>
     <label>
         amount
-        <input type="text" placeholder="enter amount" id="addAmount" value = "1">
+        <input type="text" placeholder="enter amount" id="addAmount" value="1">
     </label>
-    <button onClick="addToRopsten()">store data into TestNet</button>
+
+    <button onClick="addToRopsten()">run burn from Smart-contract</button>
 
     <br>
     <br>
 
     <label>
-        adress
-        <input type="text" placeholder="enter key" id="getByKey" value = "qw">
+        wallet adress
+        <input type="text" placeholder="enter key" id="balance_Of" value="0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD">
     </label>
 
-    <button onClick="getFromRopsten()">get amount on this adress from the TestNet</button>
+    <button onClick="getFromRopsten()">run balanceOf from Smart-contract</button>
 </body>
 
 </html>
