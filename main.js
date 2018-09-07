@@ -385,6 +385,7 @@ function getFromRopsten() {
 function go(addOrGet) {
   // web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/22b273651d424974b7ef0de70a7ed880'));
   // var Web3 = require('web3');
+  // console.log(new Web3(window.web3.currentProvider));
   web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
 
   console.log(web3.version);
@@ -397,31 +398,23 @@ function go(addOrGet) {
 
   // console.log(myContract.at(contractAddress).getStr());
   if (addOrGet) {
+    console.log('the button was pressed');
+    var walletAddress1 = '0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD';
+    var walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
     var myKey = document.getElementById('addKey').value;
     var myAmount = document.getElementById('addAmount').value;
-    var walletAddress = '0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD';
-    myContract.at(contractAddress).addMoney.sendTransaction(myKey, myAmount, { from: walletAddress, gasLimit: 400000, gasPrice: 1 }, function (err, ress) {
-      alert('err ' + err + ' ress ' + ress);
-    });
-    // var Tx = require('ethereumjs-tx');
-    // var rawTx = {
-    //   // nonce: '0x00',
-    //   gasPrice: '0x1',
-    //   gasLimit: '0x6D7A',
-    //   // to: '0x0000000000000000000000000000000000000000', 
-    //   // value: '0x00', 
-    //   data: '0x4e7774670000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000027177000000000000000000000000000000000000000000000000000000000000'
-    // }    
-    // var tx = new Tx(rawTx);
-    // var privateKey = new Buffer('D3A8EC53B34DA61C8E5E00ED5445424421CAB147E9FFCC1C649FFA1A0A968ED5', 'hex');
-    // tx.sign(privateKey);
 
-    // var serializedTx = tx.serialize();
-    // // console.log(serializedTx.toString('hex'));
-    // // f889808609184e72a00082271094000000000000000000000000000000000000000080a47f74657374320000000000000000000000000000000000000000000000000000006000571ca08a8bbf888cfa37bbf0bb965423625641fc956967b81d12e23709cead01446075a01ce999b56a8a88504be365442ea61239198e23d1fce7d00fcfc5cd3b44b7215f
-    // web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'), function(err, hash) {
-    //   if (!err)
-    //     console.log(hash); // "0x7f9fade1c0d57a7af66ab4ead79fade1c0d57a7af66ab4ead7c2c2eb7b11a91385"
+
+    myContract.methods.burn(1).send({ from: walletAddress2 }, function (error, transactionHash) {
+      if (error) {
+        console.log("err happend: " + error);
+      }else{
+        console.log("transaction Hash: " + transactionHash);
+      }
+    });
+
+    // myContract.methods.burn(1).send({ from: walletAddress }).then(function (receipt) {
+    //   alert(receipt);
     // });
 
   } else {
