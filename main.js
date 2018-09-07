@@ -382,29 +382,18 @@ function getFromRopsten() {
   go(false);
 }
 
-function go(addOrGet) {
-  // web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/22b273651d424974b7ef0de70a7ed880'));
-  // var Web3 = require('web3');
-  // console.log(new Web3(window.web3.currentProvider));
+function go(addOrGet) {  
   web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
-
   console.log(web3.version);
-  // console.log(web3.eth.getBalance("0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD"));
-  // console.log(web3.eth.getBalance("0xE7253fe2834559604dc917Cbe8420301912d0445"));  
-  // web3.eth.defaultAccount=web3.eth.accounts[0];
-  // console.log(web3.eth.accounts[0]);
   var contractAddress = '0x6c90732441c99b8c5f2d47f2280e1c5a00da89b6';
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
-
-  // console.log(myContract.at(contractAddress).getStr());
+  
   if (addOrGet) {
     console.log('the button was pressed');
     var walletAddress1 = '0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD';
     var walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
-    var myKey = document.getElementById('addKey').value;
-    var myAmount = document.getElementById('addAmount').value;
-
-
+    // var myKey = document.getElementById('addKey').value;
+    // var myAmount = document.getElementById('addAmount').value;
     myContract.methods.burn(1).send({ from: walletAddress2 }, function (error, transactionHash) {
       if (error) {
         console.log("err happend: " + error);
@@ -418,6 +407,7 @@ function go(addOrGet) {
     // });
 
   } else {
+    console.log(document.getElementById('balance_Of').value);
     myContract.methods.balanceOf(document.getElementById('balance_Of').value).call().then(alert);
   }
 }
