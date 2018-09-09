@@ -382,9 +382,8 @@ function getFromRopsten() {
   go(false);
 }
 
-web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
-
 function go(addOrGet) {
+  web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
   console.log(web3.version);
   var contractAddress = '0x6c90732441c99b8c5f2d47f2280e1c5a00da89b6';
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
@@ -392,10 +391,13 @@ function go(addOrGet) {
   var walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
 
   if (addOrGet) {
-    console.log('the button was pressed');
+    console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
     // var myKey = document.getElementById('addKey').value;
     // var myAmount = document.getElementById('addAmount').value;
-    myContract.methods.burn(1).send({ from: walletAddress2 }, function (error, transactionHash) {
+    web3.eth.defaultAccount = walletAddress1;
+    console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
+    
+    myContract.methods.burn(1).send({ from: walletAddress1 }, function (error, transactionHash) {
       if (error) {
         console.log("err happend: " + error);
       } else {
@@ -417,11 +419,9 @@ function go(addOrGet) {
   }
 }
 
-function createWallet() {
+function createWallet() {//https://web3js.readthedocs.io/en/1.0/web3-eth-accounts.html#wallet-create
+  web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
   var newWalletAdress = web3.eth.accounts.wallet.create(1);
   console.log("the new Wallet Adress is " + newWalletAdress[0].address);
   console.log("the private key from that adress is " + newWalletAdress[0].privateKey);
 }
-
-
-// 0x16F10B2720eacdf008cA8B53B58d9Cb11B31d04D 0xb54a08912312a0b9cf8b36ce9cf508ab345be7fa0dd8f1ec5cc7a0624cf3c32a
