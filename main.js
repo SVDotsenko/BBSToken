@@ -374,6 +374,8 @@ var contractABI =
   ]
   ;
 
+  const Web3 = require("web3");
+
 function addToRopsten() {
   go(true);
 }
