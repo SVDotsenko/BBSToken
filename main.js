@@ -374,7 +374,7 @@ var contractABI =
   ]
   ;
 
-  const Web3 = require("web3");
+// const Web3 = require("web3");
 
 function addToRopsten() {
   go(true);
@@ -384,28 +384,58 @@ function getFromRopsten() {
   go(false);
 }
 
+const testNet = 'https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880';
+const contractAddress = '0x6c90732441c99b8c5f2d47f2280e1c5a00da89b6';
+const walletAddress1 = '0x5e042fbab85df501dffb0aad30e159d15bb388bd';
+const privateKey1 = 'd3a8ec53b34da61c8e5e00ed5445424421cab147e9ffcc1c649ffa1a0a968ed5'
+const walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
+
+function sendSigned(txData, cb) {
+  const privateKey = Buffer.from(privateKey1, 'hex')
+  const transaction = new Tx(txData)
+  transaction.sign(privateKey)
+  const serializedTx = transaction.serialize().toString('hex')
+  web3.eth.sendSignedTransaction('0x' + serializedTx, cb)
+}
+
 function go(addOrGet) {
-  web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880'));
+  web3 = new Web3(new Web3.providers.HttpProvider(testNet));
   console.log(web3.version);
-  var contractAddress = '0x6c90732441c99b8c5f2d47f2280e1c5a00da89b6';
+
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
-  var walletAddress1 = '0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD';
-  var walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
 
   if (addOrGet) {
-    console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
+    // console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
     // var myKey = document.getElementById('addKey').value;
     // var myAmount = document.getElementById('addAmount').value;
     web3.eth.defaultAccount = walletAddress1;
-    console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
-    
-    myContract.methods.burn(1).send({ from: walletAddress1 }, function (error, transactionHash) {
-      if (error) {
-        console.log("err happend: " + error);
-      } else {
-        console.log("transaction Hash: " + transactionHash);
+    // console.log('web3.eth.defaultAccount ' + web3.eth.defaultAccount);
+
+    // web3.eth.personal.unlockAccount(walletAddress1, privateKey1, 1000).then(data => console.log(data)).catch(err => console.log(err));
+
+    web3.eth.getTransactionCount(walletAddress1).then(txCount => {
+      const txData = {  // construct the transaction data
+        nonce: web3.utils.toHex(txCount),
+        gasLimit: web3.utils.toHex(25000),
+        gasPrice: web3.utils.toHex(10e9), // 10 Gwei
+        to: walletAddress2,
+        from: walletAddress1,
+        value: web3.utils.toHex(web3.utils.toWei('3', 'wei'))
       }
-    });
+      // fire away!
+      sendSigned(txData, function (err, result) {
+        if (err) return console.log('error', err)
+        console.log('sent', result)
+      })
+    })
+    
+    // myContract.methods.burn(1).send({ from: walletAddress1 }, function (error, transactionHash) {
+    //   if (error) {
+    //     console.log("err happend: " + error);
+    //   } else {
+    //     console.log("transaction Hash: " + transactionHash);
+    //   }
+    // });
 
     // myContract.methods.burn(1).send({ from: walletAddress }).then(function (receipt) {
     //   alert(receipt);
