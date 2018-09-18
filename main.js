@@ -1,4 +1,3 @@
-alert("sdfsdf");
 var contractABI =
   [
     {
@@ -400,10 +399,12 @@ const walletAddress2 = '0xE7253fe2834559604dc917Cbe8420301912d0445';
 // }
 
 function go(addOrGet) {
-  web3 = new Web3(new Web3.providers.HttpProvider(testNet));
-  console.log("qqqqqqqqq");
-  console.log(web3.version + "ssdf");
-
+  if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+  } else {
+    web3 = new Web3(new Web3.providers.HttpProvider(testNet));
+  }
+  console.log(web3.version);
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
 
   if (addOrGet) {
@@ -430,18 +431,14 @@ function go(addOrGet) {
     //     console.log('sent', result)
     //   })
     // })
-    
-    // myContract.methods.burn(1).send({ from: walletAddress1 }, function (error, transactionHash) {
-    //   if (error) {
-    //     console.log("err happend: " + error);
-    //   } else {
-    //     console.log("transaction Hash: " + transactionHash);
-    //   }
-    // });
 
-    // myContract.methods.burn(1).send({ from: walletAddress }).then(function (receipt) {
-    //   alert(receipt);
-    // });
+    myContract.methods.burn(1).send({ from: walletAddress1 }, function (error, transactionHash) {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-send
+      if (error) {
+        console.log("err happend: " + error);
+      } else {
+        console.log("transaction Hash: " + transactionHash);
+      }
+    });
 
   } else {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-call
     myContract.methods.balanceOf(walletAddress1).call({ from: walletAddress1 }, function (error, result) {
@@ -451,6 +448,33 @@ function go(addOrGet) {
       console.log("balance of the wallet " + walletAddress2 + " is " + result);
     });
   }
+}
+
+function sendFromTo() {
+  if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+  } else {
+    web3 = new Web3(new Web3.providers.HttpProvider(testNet));
+  }
+  console.log(web3.version);
+  var myContract = new web3.eth.Contract(contractABI, contractAddress);
+  web3.eth.defaultAccount = walletAddress1;
+
+  // myContract.methods.transferFrom(walletAddress1, walletAddress2, 1).send({ from: walletAddress1 }, function (error, transactionHash) {
+  //   if (error) {
+  //     console.log("err happend: " + error);
+  //   } else {
+  //     console.log("transaction Hash: " + transactionHash);
+  //   }
+  // });
+
+  myContract.methods.transfer(walletAddress2, 1).send({ from: walletAddress1 }, function (error, transactionHash) {
+    if (error) {
+      console.log("err happend: " + error);
+    } else {
+      console.log("transaction Hash: " + transactionHash);
+    }
+  });
 }
 
 function createWallet() {//https://web3js.readthedocs.io/en/1.0/web3-eth-accounts.html#wallet-create
