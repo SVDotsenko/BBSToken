@@ -1,0 +1,18 @@
+div{
+    margin: auto;
+    width: 35%;
+    border: 2px solid rgba(22, 33, 43, 0.904);
+    padding: 20px;
+}
+
+h3{
+    text-align:center
+}
+
+.amount{
+    width:30px
+}
+
+.wallet{
+    width:320px
+}

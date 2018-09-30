@@ -1,56 +1,43 @@
 <!doctype html>
-<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Access to contract methods</title>
+    <title>web3.js demo</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <script src="lib/web3.min.js"></script>
-    <script src="lib/ethereumjs-tx-1.3.3.min.js"></script>
-    <script src="main.js"></script>
+    <script src="js/lib/web3.min.js"></script>
+    <script src="js/lib/ethereumjs-tx-1.3.3.min.js"></script>
+    <script src="js/main.js"></script>
 
-    <label>
-        wallet adress
-        <input type="text" id="addKey" value="0x5E042fbaB85dF501dFFB0AAD30e159d15BB388BD">
-    </label>
-    <label>
-        amount
-        <input type="text" id="addAmount" value="1">
-    </label>
-
-    <button onClick="addToRopsten()">run burn from Smart-contract</button>
-
-    <br>
-    <br>
-
-    <button onClick="getFromRopsten()">run balanceOf from Smart-contract</button>
-    <br>
-    <br>
-    <button onclick="createWallet()">create wallet</button>
-
-    <br>
-    <br>
-
-    <label>
-        sender wallet
-        <input type="text" id="swallet" value="0x5e042fbab85df501dffb0aad30e159d15bb388bd">
-    </label>
-
-    <label>
-        receiver wallet
-        <input type="text" id="rwallet" value="0xE7253fe2834559604dc917Cbe8420301912d0445">
-    </label>
-
-    <label>
-        amount
-        <input type="text" id="amount" value="3">
-    </label>
-
-    <button onClick="transferMetamask()">transfer (Metamask)</button>
-    <button onClick="transfer()">transfer</button>
-
+    <h3>Demontsrastion intaracting web application with Ethereum TestNet Ropsten using
+        web3.js</h1>
+        <div>
+            <label>
+                wallet 1
+                <input class="wallet" type="text" id="w1" value="0x5e042fbab85df501dffb0aad30e159d15bb388bd">
+            </label>
+            <!-- <button onClick="w1SendsMM()">transfer (Metamask)</button> -->
+            <button onClick="w1Sends()">transfer</button>
+            <button onClick="burnW1()">burn</button>
+            <br><br>
+            <label>
+                amount 
+                <input class="amount" type="text" id="amount" value="3">
+            </label>
+            <br><br>
+            <label>
+                wallet 2
+                <input class="wallet" type="text" id="w2" value="0xE7253fe2834559604dc917Cbe8420301912d0445">
+            </label>
+            <!-- <button onClick="w2SendsMM()">transfer (Metamask)</button> -->
+            <button onClick="w2Sends()">transfer</button>
+            <button onClick="burnW2()">burn</button>
+            <br><br><br>
+            <button onClick="printBalances()">balanceOf</button>
+            <br><br><br>
+            <button onclick="createWallet()">create new wallet</button>
+        </div>
 </body>
 
 </html>
