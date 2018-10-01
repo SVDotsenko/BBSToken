@@ -1,3 +1,13 @@
+/*
+0x5e042fbab85df501dffb0aad30e159d15bb388bd d3a8ec53b34da61c8e5e00ed5445424421cab147e9ffcc1c649ffa1a0a968ed5
+0xE7253fe2834559604dc917Cbe8420301912d0445 0BE41454D39278B39482EF100EF379D7A24D97B4AB34348F562D2DA4B28DDA95
+0x47f8fb893E7f40AD9E1DDfFD46830949039C050B 08bd1926ade5f2b48a6b0092253c328bc6c6f46e8dc393898ccddc8b3ce6933e
+0x2031A5EA6c6dC2cb69D0A148378118294A5b3904 54023b1da8a3a05eb4398c70307afb32b13c640dab77651011e5e716570df0f0
+0xC756aA55A4b6F69d0C4638523bF9b9bf34BA81a6 f663a14a902c0b26318d34f2c8e9c5fc3c7e994b741c8945301c14861a3592a1
+0x3aBF8Ec7aA6B4cC606022d58B6ed2513d4f90615 17f8b74b3388e3630c928fb740d79b54c35715767d6a59512926eaced175ce07
+0x577a6b470A2a573B42F06Ba3EBD3f51B79e330e5 e82846e02f1088facca8423024e12d948992ec2e2e100ddf835fde205b679773
+0x55538f847cE465bC427CE66e3DE4CaA994461Cfa a91fcd97ce022f86166a34690d9998ac078d28989c86fae22c59afa8773fa776
+*/
 var contractABI =
   [
     {
@@ -426,7 +436,7 @@ function w2Sends() {
 function balanceOf(walletAdress) {
   web3 = new Web3(typeof web3 !== 'undefined' ? web3.currentProvider : new Web3.providers.HttpProvider(localhost8545));
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
-  myContract.methods.balanceOf(walletAdress).call({ from: walletAdress }).then(function (result) {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-call
+  myContract.methods.balanceOf(walletAdress).call({ from: walletAdress }).then(function (result) {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-call    
     console.log("wallet " + walletAdress + " balance is " + result + " BBS coins");
   });
 }
