@@ -384,7 +384,6 @@ var contractABI =
   ]
   ;
 
-const localhost8545 = 'http://localhost:8545';
 const ropstenInfura = 'https://ropsten.infura.io/v3/22b273651d424974b7ef0de70a7ed880';
 const ropstenEtherscan = 'https://ropsten.etherscan.io/tx/';
 const contractAddress = '0x6c90732441c99b8c5f2d47f2280e1c5a00da89b6';
@@ -398,7 +397,7 @@ function createWallet() {
 }
 
 function transfer(sender, senderPK, reciever, amount) {
-  var web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
+  web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
 
   web3.eth.getTransactionCount(sender, function (err, nonce) {
     var myContract = new web3.eth.Contract(contractABI, contractAddress);
@@ -434,7 +433,7 @@ function w2Sends() {
 }
 
 function balanceOf(walletAdress) {
-  web3 = new Web3(typeof web3 !== 'undefined' ? web3.currentProvider : new Web3.providers.HttpProvider(localhost8545));
+  web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
   myContract.methods.balanceOf(walletAdress).call({ from: walletAdress }).then(function (result) {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-call    
     console.log("wallet " + walletAdress + " balance is " + result + " BBS coins");
@@ -447,7 +446,7 @@ function printBalances() {
 }
 
 function burn(publicKey, privateKey, amount) {
-  var web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
+  web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
 
   web3.eth.getTransactionCount(publicKey, function (err, nonce) {
     var myContract = new web3.eth.Contract(contractABI, contractAddress);
@@ -481,6 +480,7 @@ function burnW2() {
 }
 
 /*
+const localhost8545 = 'http://localhost:8545';
 function transferMM(sender, reciever, amount) {
   web3 = new Web3(typeof web3 !== 'undefined' ? web3.currentProvider : new Web3.providers.HttpProvider(localhost8545));
 
