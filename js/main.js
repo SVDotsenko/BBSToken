@@ -414,6 +414,12 @@ function transfer(sender, senderPK, reciever, amount) {
 
     web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'), function (err, transactionHash) {
       console.log(err ? err : ropstenEtherscan + transactionHash);
+      // web3.eth.getTransactionReceipt('0x18691a5a32d2562b5c9aa8a581e11fa76c16d5e8a1904bc77d1b390bd713db56', function (err1, res1) {
+      //   console.log("getTransactionReceipt " + (err1 ? err1 : res1.logs));
+      // });  
+      var receipt = web3.eth.getTransactionReceipt(transactionHash).then(console.log);
+      console.log('finish13421');
+      console.log('receipt ' + receipt);
     });
   });
 }
@@ -436,7 +442,7 @@ function balanceOf(walletAdress) {
   web3 = new Web3(new Web3.providers.HttpProvider(ropstenInfura));
   var myContract = new web3.eth.Contract(contractABI, contractAddress);
   myContract.methods.balanceOf(walletAdress).call({ from: walletAdress }).then(function (result) {//https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-call    
-    console.log("wallet " + walletAdress + " balance is " + result + " BBS coins");
+    console.log(walletAdress + " balance is " + result + " BBS coins");
   });
 }
 
