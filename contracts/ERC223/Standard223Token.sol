@@ -13,14 +13,14 @@ contract Standard223Token is ERC223, StandardToken {
   function transfer(address _to, uint _value, bytes _data) returns (bool success) {
     //filtering if the target is a contract with bytecode inside it
     if (!super.transfer(_to, _value)) throw; // do a normal token transfer
-    if (isContract(_to)) contractFallback(msg.sender, _to, _value, _data);
+    if (isContract(_to)) contractFallback(msg.sender, _to, _value, _data);//erc_223
    Transfer(msg.sender, _to, _value, _data);
     return true;
   }
 
   function transferFrom(address _from, address _to, uint _value, bytes _data) returns (bool success) {
     if (!super.transferFrom(_from, _to, _value)) throw; // do a normal token transfer
-    if (isContract(_to)) contractFallback(_from, _to, _value, _data);
+    if (isContract(_to)) contractFallback(_from, _to, _value, _data);//erc_223
     Transfer(_from, _to, _value, _data);
     return true;
   }
@@ -36,7 +36,7 @@ contract Standard223Token is ERC223, StandardToken {
   //function that is called when transaction target is a contract
   function contractFallback(address _origin, address _to, uint _value, bytes _data) private {
     ERC223Receiver reciever = ERC223Receiver(_to);
-    reciever.tokenFallback(_origin, _value, _data);
+    reciever.tokenFallback(_origin, _value, _data);//erc_223
   }
 
   //assemble the given address bytecode. If bytecode exists then the _addr is a contract.

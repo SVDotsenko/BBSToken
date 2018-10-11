@@ -14,7 +14,7 @@ contract Standard223Receiver is ERC223Receiver {
         bytes4 sig;
   }
 
-   function tokenFallback(address _from, uint _value, bytes _data){
+   function tokenFallback(address _from, uint _value, bytes _data){//erc_223
       Tkn memory tkn;
       tkn.sender = _from;
       tkn.value = _value;

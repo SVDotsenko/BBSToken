@@ -18,29 +18,29 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
     uint8 public constant decimals = 18;
     uint public constant DECIMALS_MULTIPLIER = 10**uint(decimals);
     
-    uint public ICOstarttime = 1516024800;           //2018.1.15  January 15, 2018 2:00:00 PM GMT 1516024800
-    uint public ICOendtime = 1518757200;             //2018.2.15 February 16, 2018 5:00:00 AM GMT 1518757200
+    uint private ICOstarttime = 1516024800;           //2018.1.15  January 15, 2018 2:00:00 PM GMT 1516024800
+    uint private ICOendtime = 1518757200;             //2018.2.15 February 16, 2018 5:00:00 AM GMT 1518757200
     
-    uint public minimumInvestmentInWei = DECIMALS_MULTIPLIER / 100;
-    uint public maximumInvestmentInWei = 1000 * 1 ether;
-    address saleWalletAddress;
+    uint private minimumInvestmentInWei = DECIMALS_MULTIPLIER / 100;
+    uint private maximumInvestmentInWei = 1000 * 1 ether;
+    address private saleWalletAddress;
 
-    uint256 public constant softcapInTokens = 25000000 * DECIMALS_MULTIPLIER; //25000000 * DECIMALS_MULTIPLIER;
-    uint256 public constant hardcapInTokens = 650000000 * DECIMALS_MULTIPLIER;
+    uint256 private constant softcapInTokens = 25000000 * DECIMALS_MULTIPLIER; //25000000 * DECIMALS_MULTIPLIER;
+    uint256 private constant hardcapInTokens = 650000000 * DECIMALS_MULTIPLIER;
     
-    uint256 public totaltokensold = 0;
+    uint256 private totaltokensold = 0;
     
-    uint public USDETH = 1205;
+    uint private USDETH = 1205;
     uint NumberOfTokensIn1USD = 100;
     
     //RefundVault public vault;
-    bool public isFinalized = false;
+    bool private isFinalized = false;
     event Finalized();
     
     event newOraclizeQuery(string description);
     event newETHUSDPrice(string price);
     
-    function increaseSupply(uint value, address to) public onlyOwner returns (bool) {
+    function increaseSupply(uint value, address to) private onlyOwner returns (bool) {
         totalSupply = totalSupply.add(value);
         balances[to] = balances[to].add(value);
         Transfer(0, to, value);
@@ -99,7 +99,7 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
     }
     
     // if crowdsale is unsuccessful, investors can claim refunds here
-    function claimRefund() public {
+    function claimRefund() private {
         require(isFinalized);
         require(!goalReached());
         
@@ -123,7 +123,7 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
         }
     }
     
-    function releaseUnclaimedFunds() onlyOwner public {
+    function releaseUnclaimedFunds() onlyOwner private {
         require(vault_state == State.Refunding && now >= refundDeadline);
         vault_releaseDeposit();
     }
@@ -146,11 +146,9 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
     }
     
 
-  function UpdateUSDETHPriceAfter (uint delay) private {
-      
+  function UpdateUSDETHPriceAfter (uint delay) private {      
     newOraclizeQuery("Update of USD/ETH price requested");
-    oraclize_query(delay, "URL", "json(https://api.etherscan.io/api?module=stats&action=ethprice&apikey=YourApiKeyToken).result.ethusd");
-       
+    oraclize_query(delay, "URL", "json(https://api.etherscan.io/api?module=stats&action=ethprice&apikey=YourApiKeyToken).result.ethusd");       
   }
 
 
@@ -166,8 +164,7 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
   }
   
   function initializeSaleWalletAddress() private {
-      saleWalletAddress = 0xd8A56FB51B86e668B5665E83E0a31E3696578333;
-      
+      saleWalletAddress = 0xd8A56FB51B86e668B5665E83E0a31E3696578333;      
   }
   
 
@@ -184,17 +181,14 @@ contract BBSTokenERC223 is usingOraclize, Ownable, RefundVault, BurnableToken, S
        }
   }
   
-  function ICOactive() public view returns (bool success) {
+  function ICOactive() private view returns (bool success) {
       if (ICOstarttime < now && now < ICOendtime && totaltokensold < hardcapInTokens) {
           return true;
-      }
-      
+      }      
       return false;
   }
 
-  function buy() payable {
-
-      
+  function buy() payable {      
 
       require (msg.value >= minimumInvestmentInWei && msg.value <= maximumInvestmentInWei);
 
