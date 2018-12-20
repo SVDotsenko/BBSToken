@@ -1,6 +1,7 @@
 pragma solidity ^0.4.24;
 
-import "github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/ERC20Burnable.sol";
+import "./ERC20Burnable.sol";
+// import "github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/ERC20Burnable.sol";
 
 contract BBSTokenERC20 is ERC20Burnable {
     string public constant name = "BBSTokenERC20";
